@@ -1,0 +1,78 @@
+# =====================================================================
+# MAP TÊN CỘT CỦA FILE EXPORT
+# Khi TikTok / Meta đổi tên cột: thêm tên mới vào danh sách tương ứng
+# (giữ tên cũ cũng được). Không phân biệt hoa/thường, dấu tiếng Việt,
+# dấu câu. Tên có đơn vị kiểu "(VND)" chỉ cần ghi phần đầu: "Amount spent".
+#
+# Loại file được nhận diện TỰ ĐỘNG theo tên cột (không cần đặt tên file):
+# file nào có đủ các cột trong "bat_buoc" và khớp nhiều cột nhất sẽ được chọn.
+#
+# Mỗi trường:
+#   cot:  các tên cột có thể gặp
+#   kieu: dem (số đếm / tiền: '1.234' hiểu là 1234) | so (số lẻ, vd giây: '7,4') | chu
+#   gop:  khi 1 video có nhiều dòng trong cùng file -> cong (cộng) | lon_nhat
+#   ghi:  khoá cột tab 03 nhận số này (xem config/brands/<brand>/brand.yaml)
+# ID video/bài viết được tự tìm trong MỌI ô của dòng (link, Post ID, tên quảng cáo...)
+# =====================================================================
+
+loai_file:
+
+  tiktok_ads:
+    ten: "TikTok Ads Manager"
+    # Quảng cáo: số liệu theo khoảng ngày -> các file khác nhau được CỘNG lại
+    tich_luy: false
+    bat_buoc: [chi_phi, ten_quang_cao]
+    truong:
+      ten_chien_dich: { cot: ["Campaign name", "Campaign", "Tên chiến dịch", "Chiến dịch"], kieu: chu, ghi: campaign_tiktok }
+      ten_nhom:       { cot: ["Ad group name", "Ad group", "Tên nhóm quảng cáo"], kieu: chu }
+      ten_quang_cao:  { cot: ["Ad name", "Tên quảng cáo"], kieu: chu }
+      id_quang_cao:   { cot: ["Ad ID", "ID quảng cáo"], kieu: chu }
+      id_bai_tiktok:  { cot: ["TikTok post ID", "Post ID", "Video ID", "ID bài đăng", "ID bài đăng TikTok", "ID video"], kieu: chu }
+      chi_phi:        { cot: ["Cost", "Total cost", "Spend", "Chi phí", "Tổng chi phí"], kieu: dem, gop: cong, ghi: chi_phi_tiktok }
+      luot_xem_ads:   { cot: ["Video views", "Lượt xem video"], kieu: dem, gop: cong }
+      xem_2s:         { cot: ["2-second video views", "Lượt xem video 2 giây"], kieu: dem, gop: cong }
+      xem_6s:         { cot: ["6-second video views", "Lượt xem video 6 giây"], kieu: dem, gop: cong }
+      hien_thi:       { cot: ["Impressions", "Số lần hiển thị", "Lượt hiển thị"], kieu: dem, gop: cong }
+      tien_te:        { cot: ["Currency", "Tiền tệ"], kieu: chu }
+
+  meta_ads:
+    ten: "Meta Ads Manager"
+    tich_luy: false
+    bat_buoc: [chi_phi, luot_phat_3s]
+    truong:
+      ten_chien_dich: { cot: ["Campaign name", "Tên chiến dịch"], kieu: chu }
+      ten_nhom:       { cot: ["Ad set name", "Tên nhóm quảng cáo"], kieu: chu }
+      ten_quang_cao:  { cot: ["Ad name", "Tên quảng cáo"], kieu: chu }
+      id_bai_viet:    { cot: ["Post ID", "Object story ID", "Effective object story ID", "ID bài viết", "ID tin"], kieu: chu }
+      chi_phi:        { cot: ["Amount spent", "Số tiền đã chi tiêu", "Số tiền đã chi"], kieu: dem, gop: cong, ghi: chi_phi_fb }
+      luot_phat_3s:   { cot: ["3-second video plays", "Lượt phát video liên tục 3 giây", "Lượt phát video ít nhất 3 giây", "Lượt phát video 3 giây"], kieu: dem, gop: cong, ghi: fb_nguoi_xem_3s }
+      luot_phat:      { cot: ["Video plays", "Lượt phát video"], kieu: dem, gop: cong, ghi: fb_ads_luot_phat }
+      phat_25:        { cot: ["Video plays at 25%", "Lượt phát video ở mức 25%", "Lượt phát video đến 25%"], kieu: dem, gop: cong, ghi: fb_ads_xem_25 }
+      phat_50:        { cot: ["Video plays at 50%", "Lượt phát video ở mức 50%", "Lượt phát video đến 50%"], kieu: dem, gop: cong, ghi: fb_ads_xem_50 }
+      hien_thi:       { cot: ["Impressions", "Lượt hiển thị"], kieu: dem, gop: cong }
+
+  meta_business_suite:
+    ten: "Meta Business Suite - Insights > Nội dung"
+    # Số liệu trọn đời bài viết -> nếu có nhiều file, lấy file MỚI NHẤT (không cộng)
+    tich_luy: true
+    bat_buoc: [lien_ket]
+    truong:
+      id_bai_viet:  { cot: ["Post ID", "ID bài viết"], kieu: chu }
+      lien_ket:     { cot: ["Permalink", "Liên kết vĩnh viễn", "Liên kết cố định"], kieu: chu }
+      tieu_de:      { cot: ["Title", "Tiêu đề"], kieu: chu }
+      mo_ta:        { cot: ["Description", "Mô tả"], kieu: chu }
+      thoi_luong:   { cot: ["Duration (sec)", "Duration", "Thời lượng (giây)", "Thời lượng"], kieu: so, gop: lon_nhat }
+      xem_3s:       { cot: ["3-second video views", "Lượt xem video 3 giây", "Lượt xem video trong 3 giây"], kieu: dem, gop: cong, ghi: fb_xem_3s }
+      reach:        { cot: ["Reach", "Người tiếp cận", "Số người tiếp cận", "Lượt tiếp cận"], kieu: dem, gop: lon_nhat, ghi: fb_reach }
+      xem_tb:       { cot: ["Average Seconds viewed", "Average seconds viewed", "Số giây xem trung bình", "Thời gian xem trung bình"], kieu: so, gop: lon_nhat, ghi: fb_xem_tb }
+      luot_xem:     { cot: ["Views", "Lượt xem"], kieu: dem, gop: cong }
+
+  tiktok_organic:
+    ten: "TikTok - số liệu từng video (file mẫu nhập tay / TikTok Studio)"
+    tich_luy: true
+    bat_buoc: [link, views]
+    truong:
+      link:   { cot: ["Link TikTok", "Video link", "Link", "Liên kết video"], kieu: chu }
+      views:  { cot: ["views", "Video views", "Total views", "Lượt xem"], kieu: dem, gop: lon_nhat, ghi: tiktok_views }
+      likes:  { cot: ["likes", "Total likes", "Lượt thích"], kieu: dem, gop: lon_nhat, ghi: tiktok_likes }
+      shares: { cot: ["shares", "Total shares", "Lượt chia sẻ"], kieu: dem, gop: lon_nhat, ghi: tiktok_shares }

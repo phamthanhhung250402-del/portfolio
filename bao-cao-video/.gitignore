@@ -1,0 +1,12 @@
+# KHÔNG BAO GIỜ commit số liệu thật (dấu / đầu dòng = chỉ thư mục ở gốc công cụ)
+/input/
+/input-*/
+/output/
+/output-*/
+/samples/demo/output/
+/.venv/
+/loi-gan-nhat.txt
+__pycache__/
+*.pyc
+.DS_Store
+~$*.xlsx

@@ -4,6 +4,8 @@ Website portfolio Video & Social Content, một trang, HTML/CSS/JS thuần (khô
 
 **Link web:** https://phamthanhhung250402-del.github.io/portfolio/
 
+> Công cụ báo cáo số liệu video & đề xuất mix nội dung (chạy trên Mac) nằm riêng trong thư mục [`bao-cao-video/`](bao-cao-video/README.md).
+
 ```
 index.html              Nội dung trang (hero, dịch vụ, kinh nghiệm, liên hệ...)
 css/style.css           Giao diện
