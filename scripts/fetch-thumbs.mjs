@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 /**
- * Tải thumbnail cho từng clip trong data/clips.json qua TikTok oEmbed,
- * lưu vào assets/thumbs/{id}.webp và ghi trường "thumb" vào clips.json.
+ * Tải thumbnail cho từng video trong data/clips.json và data/ads.json qua TikTok oEmbed,
+ * lưu vào assets/thumbs/{id}.webp và ghi trường "thumb" vào file JSON.
  *
  * Cách chạy (cần Node 18+), đứng ở thư mục gốc dự án:
  *   node scripts/fetch-thumbs.mjs          # chỉ tải clip chưa có ảnh
@@ -19,7 +19,7 @@ import { fileURLToPath } from "node:url";
 import path from "node:path";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
-const DATA = path.join(ROOT, "data", "clips.json");
+const DATA_FILES = ["clips.json", "ads.json"].map((f) => path.join(ROOT, "data", f));
 const OUT_DIR = path.join(ROOT, "assets", "thumbs");
 const FORCE = process.argv.includes("--force");
 const WIDTH = 540; // khớp width/height khai báo trên thẻ <img> (540x960)
@@ -71,27 +71,30 @@ async function fetchThumb(clip) {
   return `assets/thumbs/${clip.id}.jpg`;
 }
 
-const clips = JSON.parse(await readFile(DATA, "utf8"));
 await mkdir(OUT_DIR, { recursive: true });
 if (!sharp && !hasCmd("ffmpeg") && !hasCmd("cwebp")) {
   console.log("! Không tìm thấy sharp/ffmpeg/cwebp - ảnh sẽ được lưu dạng .jpg.");
 }
 
 let ok = 0, skipped = 0, failed = 0;
-for (const clip of clips) {
-  if (clip.placeholder || !clip.tiktok) { skipped++; continue; }
-  if (!FORCE && clip.thumb && await exists(path.join(ROOT, clip.thumb))) { skipped++; continue; }
-  try {
-    clip.thumb = await fetchThumb(clip);
-    ok++;
-    console.log(`✓ ${clip.id}  ${clip.title}`);
-  } catch (err) {
-    failed++;
-    console.log(`✗ ${clip.id}  ${clip.title}  (${err.message})`);
+for (const file of DATA_FILES) {
+  if (!(await exists(file))) continue;
+  console.log(`\n== ${path.relative(ROOT, file)}`);
+  const clips = JSON.parse(await readFile(file, "utf8"));
+  for (const clip of clips) {
+    if (clip.placeholder || !/\/video\/\d+/.test(clip.tiktok || "")) { skipped++; continue; }
+    if (!FORCE && clip.thumb && await exists(path.join(ROOT, clip.thumb))) { skipped++; continue; }
+    try {
+      clip.thumb = await fetchThumb(clip);
+      ok++;
+      console.log(`✓ ${clip.id}  ${clip.title}`);
+    } catch (err) {
+      failed++;
+      console.log(`✗ ${clip.id}  ${clip.title}  (${err.message})`);
+    }
   }
+  // Giữ định dạng mỗi video một dòng cho dễ sửa tay
+  await writeFile(file, "[\n" + clips.map((c) => "  " + JSON.stringify(c)).join(",\n") + "\n]\n");
 }
-
-// Giữ định dạng mỗi clip một dòng cho dễ sửa tay
-await writeFile(DATA, "[\n" + clips.map((c) => "  " + JSON.stringify(c)).join(",\n") + "\n]\n");
 console.log(`\nXong: ${ok} ảnh mới, ${skipped} bỏ qua, ${failed} lỗi.`);
 if (failed) process.exitCode = 1;
