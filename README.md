@@ -42,7 +42,7 @@ ads: {
 - `price: null` → hiện "Liên hệ báo giá". Điền giá → hiện "Giá từ ...".
 - Ô CPM nào để `value: null` thì tự ẩn. **Lưu ý:** CPV/CPM là số liệu nội bộ của TopZone - nên hỏi lại quản lý trước khi công khai.
 - Sửa mô tả gói dịch vụ, kỹ năng, quy trình, kinh nghiệm: sửa trực tiếp trong `index.html` (tìm theo chữ).
-- Đổi ảnh cá nhân: thay file cùng tên trong `assets/photos/` (`hung-main.webp` tỉ lệ 3:4, 3 ảnh nhỏ tỉ lệ 4:5, `hung-avatar.webp` vuông).
+- Đổi ảnh cá nhân: thay file cùng tên trong `assets/photos/` (`hung-main.webp` 900×1200, 3 ảnh nhỏ `hung-podium/talk/ballot.webp` 600×750, `hung-avatar.webp` vuông 192×192, ảnh sự kiện `event-*.webp` 1200×800, banner `collage.webp`).
 
 **Sửa nhanh trên GitHub (không cần cài gì):** vào repo → mở file → bấm biểu tượng bút chì ✏️ → sửa → **Commit changes**. Khoảng 1 phút sau web tự cập nhật.
 
