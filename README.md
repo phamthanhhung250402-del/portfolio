@@ -66,6 +66,7 @@ Mỗi dòng trong file JSON là một mục (nhớ dấu phẩy giữa các dòn
 | `duration` | (tuỳ chọn) thời lượng tính bằng giây |
 | `date` | (tuỳ chọn) ngày đăng `YYYY-MM-DD` |
 | `facebook` | (tuỳ chọn) link bản Facebook của video |
+| `embed` | (tuỳ chọn) `false` nếu TikTok chặn phát nhúng video đó (hiện "Video currently unavailable"); web sẽ hiện nút mở thẳng TikTok |
 | `featured` | (tuỳ chọn) `true` = đưa vào slideshow khung điện thoại; không có thì tự lấy 4 video view cao nhất |
 | `thumb` | Ảnh bìa - script ở mục 3 tự điền |
 
