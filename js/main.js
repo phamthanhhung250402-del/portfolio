@@ -512,6 +512,7 @@
   /* ---------- Lightbox ---------- */
   var clipById = {};
   var dialog, frame, panel, lastFocus;
+  var currentClip = null, playerReady = false, playerTimer = null;
 
   function tiktokId(clip) {
     var m = String(clip.tiktok || "").match(/video\/(\d+)/);
@@ -536,21 +537,57 @@
     var fb = $("#lb-facebook");
     if (clip.facebook) { fb.href = clip.facebook; fb.hidden = false; } else { fb.hidden = true; }
 
-    frame.innerHTML = '<span class="lb-loading">Đang tải video…</span>';
-    var iframe = document.createElement("iframe");
-    iframe.src = "https://www.tiktok.com/player/v1/" + vid +
-      "?autoplay=1&music_info=1&description=0&rel=0&native_context_menu=0&closed_caption=1";
-    iframe.title = "Video TikTok: " + clip.title;
-    iframe.allow = "autoplay; fullscreen; encrypted-media; picture-in-picture";
-    iframe.setAttribute("allowfullscreen", "");
-    iframe.referrerPolicy = "strict-origin-when-cross-origin";
-    frame.appendChild(iframe);
+    $("#lb-hint").hidden = true;
+    clearTimeout(playerTimer);
+    playerReady = false;
+
+    // Video bị TikTok chặn nhúng (embed: false): hiện khung mở thẳng TikTok
+    if (clip.embed === false) {
+      showFallback(clip);
+    } else {
+      frame.innerHTML = '<span class="lb-loading">Đang tải video…</span>';
+      var iframe = document.createElement("iframe");
+      iframe.src = "https://www.tiktok.com/player/v1/" + vid +
+        "?autoplay=1&music_info=1&description=0&rel=0&native_context_menu=0&closed_caption=1";
+      iframe.title = "Video TikTok: " + clip.title;
+      iframe.allow = "autoplay; fullscreen; encrypted-media; picture-in-picture";
+      iframe.setAttribute("allowfullscreen", "");
+      iframe.referrerPolicy = "strict-origin-when-cross-origin";
+      frame.appendChild(iframe);
+      currentClip = clip;
+      // Không nhận được tín hiệu sẵn sàng từ trình phát => gợi ý xem trên TikTok
+      playerTimer = setTimeout(function () { if (!playerReady) $("#lb-hint").hidden = false; }, 7000);
+    }
 
     panel.style.transform = "";
     if (typeof dialog.showModal === "function") dialog.showModal();
     else dialog.setAttribute("open", "");
     document.body.classList.add("lb-open");
     $("#lb-close").focus();
+  }
+
+  // Khung thay thế khi video không phát được trong trang
+  function showFallback(clip) {
+    clearTimeout(playerTimer);
+    $("#lb-hint").hidden = true;
+    frame.innerHTML = mediaHtml(clip, { badges: false }) +
+      '<div class="lb-fallback"><p>Video này chỉ xem được trên TikTok.</p>' +
+      '<a class="btn btn-primary" href="' + escapeHtml(clip.tiktok) + '" target="_blank" rel="noopener">Mở video trên TikTok ↗</a></div>';
+  }
+
+  // Tin nhắn từ trình phát TikTok (player/v1): onPlayerReady, onStateChange, onError
+  function onPlayerMessage(e) {
+    if (!/tiktok\.com$/.test(String(e.origin).replace(/^https?:\/\//, "").split(":")[0])) return;
+    var d = e.data;
+    if (typeof d === "string") { try { d = JSON.parse(d); } catch (err) { return; } }
+    if (!d || !d["x-tiktok-player"] || !currentClip || !dialog.hasAttribute("open")) return;
+    if (d.type === "onPlayerReady" || (d.type === "onStateChange" && d.value === 1)) {
+      playerReady = true;
+      clearTimeout(playerTimer);
+      $("#lb-hint").hidden = true;
+    } else if (d.type === "onError") {
+      showFallback(currentClip);
+    }
   }
 
   function closeLightbox() {
@@ -562,6 +599,8 @@
   function onClosed() {
     dialog.removeAttribute("open");
     frame.innerHTML = "";
+    clearTimeout(playerTimer);
+    currentClip = null;
     panel.style.transform = "";
     document.body.classList.remove("lb-open");
     if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
@@ -574,6 +613,7 @@
     if (!dialog) return;
 
     $("#lb-close").addEventListener("click", closeLightbox);
+    window.addEventListener("message", onPlayerMessage);
     dialog.addEventListener("close", onClosed);
     dialog.addEventListener("click", function (e) { if (e.target === dialog) closeLightbox(); });
     document.addEventListener("keydown", function (e) {
