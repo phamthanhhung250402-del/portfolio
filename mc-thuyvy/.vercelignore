@@ -1,0 +1,7 @@
+# Không đưa lên website: ảnh gốc, công cụ, tài liệu tham khảo (PDF)
+assets/raw
+tools
+reference
+docs
+README.md
+*.pdf

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+<defs><radialGradient id="b" cx=".5" cy=".38" r=".75"><stop offset="0" stop-color="#9b0d0f"/><stop offset=".55" stop-color="#5F0203"/><stop offset="1" stop-color="#2D0102"/></radialGradient>
+<linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".5" stop-color="#F5EEEC"/><stop offset="1" stop-color="#D9C6C4"/></linearGradient></defs>
+<rect width="64" height="64" rx="14" fill="url(#b)"/>
+<rect x="3.5" y="3.5" width="57" height="57" rx="11" fill="none" stroke="#D9C6C4" stroke-opacity=".55"/>
+<path fill="url(#s)" transform="translate(10.69 52.81) scale(0.6369)" d="M66.6 -61.3Q63.1 -61.3 60.1 -58.6Q57.1 -55.9 55.2 -50.8L35.7 -0.1Q35.6 0.3 34.6 0.3Q33.6 0.3 33.5 -0.1L8.2 -54.2Q6.4 -57.9 4.6 -59.6Q2.8 -61.3 0.3 -61.3Q0 -61.3 0 -61.9Q0 -62.5 0.3 -62.5L2.9 -62.4Q5.3 -62.2 7.9 -62.2Q14.9 -62.2 20.5 -62.4Q22.1 -62.5 24.5 -62.5Q24.8 -62.5 24.8 -61.9Q24.8 -61.3 24.5 -61.3Q21.5 -61.3 19.9 -60.2Q18.3 -59.1 18.3 -57Q18.3 -55.2 19.3 -53.2L38.6 -11.4L34.5 -4.5L52.5 -51.2Q53.4 -53.6 53.4 -55.5Q53.4 -58.3 51.55 -59.8Q49.7 -61.3 46.1 -61.3Q45.8 -61.3 45.8 -61.9Q45.8 -62.5 46.1 -62.5L50.7 -62.4Q54.7 -62.2 57.8 -62.2Q59.7 -62.2 62.5 -62.4L66.6 -62.5Q66.9 -62.5 66.9 -61.9Q66.9 -61.3 66.6 -61.3Z"/>
+</svg>

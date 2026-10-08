@@ -1,0 +1,283 @@
+{
+  "meta": {
+    "lang": "en",
+    "locale": "en-GB",
+    "title": "MC Thúy Vy - Bilingual Event Host",
+    "description": "MC Thúy Vy (Nguyễn Ngọc Thúy Vy) - bilingual Vietnamese-English event host who works without a script. 8+ years, 1,000+ events: galas, year-end parties, conferences, product launches and esports. Available nationwide."
+  },
+  "a11y": {
+    "skip": "Skip to main content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "langGroup": "Choose language",
+    "home": "MC Thúy Vy - back to top",
+    "close": "Close",
+    "prev": "Previous photo",
+    "next": "Next photo",
+    "newTab": "(opens in a new tab)"
+  },
+  "nav": {
+    "about": "About",
+    "fields": "Expertise",
+    "events": "Events",
+    "clients": "Clients",
+    "contact": "Contact",
+    "book": "Book now"
+  },
+  "hero": {
+    "eyebrow": "Master of Ceremonies",
+    "mc": "MC",
+    "name": "Thúy Vy",
+    "fullName": "Nguyễn Ngọc Thúy Vy",
+    "subtitle": "Event host · Bilingual · Script-free",
+    "tagline": "Versatile - Professional - Sincere",
+    "ctaBook": "Book now",
+    "ctaShowreel": "Watch showreel",
+    "portraitAlt": "Portrait of MC Thúy Vy",
+    "scroll": "Scroll down"
+  },
+  "stats": {
+    "title": "In numbers",
+    "items": [
+      { "value": 8, "suffix": "+", "label": "years of experience" },
+      { "value": 1000, "suffix": "+", "label": "events hosted" },
+      { "value": 50, "suffix": "+", "label": "programme formats" },
+      { "value": 200, "suffix": "+", "label": "partners" }
+    ],
+    "specs": [
+      { "label": "Accent", "value": "Southern Vietnamese" },
+      { "label": "Height", "value": "165cm" }
+    ]
+  },
+  "greeting": {
+    "eyebrow": "A personal note",
+    "title": "Dear valued partners",
+    "body": "Hosting a wide range of programmes for many different brands has given me a cross-industry foundation and a multi-faceted perspective, allowing me to quickly bring the right background knowledge to each type of event and to grasp every brief in depth. This is what keeps me steady as I lead and connect audiences across such a diverse range of occasions. It is a true honour to be trusted by our partners. I will bring my own signature style to convey the core values of every business, brand and product, and help create events that are impressive and truly memorable. With sincere gratitude!",
+    "signature": "Thúy Vy",
+    "portraitAlt": "MC Thúy Vy in an evening gown"
+  },
+  "highlights": {
+    "eyebrow": "Profile",
+    "title": "Highlights",
+    "items": [
+      "MC lecturer at the HennaDa Community skills academy",
+      "Has hosted more than 1,000 events in Vietnam and internationally",
+      "Script-free host for major productions and bilingual MC (Grab Year-End Party 2022 \"Shine The Night\" - hosted without a script, delivering 6,000 words)",
+      "Esports MC and caster for many renowned game titles",
+      "Former VJ in collaboration with Kênh 14",
+      "Host of reputable beauty pageants",
+      "Collaborates with TV and radio stations: HTV7, HTV9, HGV (Hậu Giang), THĐT (Đồng Tháp), VOH",
+      "Third place, The Mic 2022",
+      "Featured on the cover of Thanh Niên newspaper; guest speaker at talks and workshops",
+      "KOC with more than 50,000 followers on social media"
+    ]
+  },
+  "showreel": {
+    "eyebrow": "Showreel",
+    "title": "On stage",
+    "intro": "A few minutes to see how Thúy Vy keeps a programme on pace, improvises and connects with the room.",
+    "play": "Play showreel",
+    "pendingTitle": "Showreel coming soon",
+    "pendingNote": "Get in touch to receive the full showreel and videos of signature programmes.",
+    "pendingCta": "Request showreel",
+    "moreTitle": "Programme videos",
+    "videoLabel": "Video",
+    "playVideo": "Play video",
+    "iframeTitle": "MC Thúy Vy video"
+  },
+  "fields": {
+    "eyebrow": "Expertise",
+    "title": "What I host",
+    "intro": "More than 50 programme formats, from galas for thousands of guests to industry conferences and esports tournaments.",
+    "open": "View events",
+    "dialogEvents": "Signature events",
+    "viewInGallery": "View in the photo gallery",
+    "items": [
+      {
+        "id": "gala",
+        "title": "Gala & YEP",
+        "summary": "Year-end parties, gala dinners and corporate anniversaries.",
+        "events": [
+          "Shine The Night - Grab Year-End Party 2022",
+          "Audi New Year Eve Party",
+          "MICO Gala 2024",
+          "Happy Corp Year-End Party 2024",
+          "Tín Quang Group 20th Anniversary",
+          "Lotteria 25th Anniversary",
+          "vHost 15th Anniversary"
+        ]
+      },
+      {
+        "id": "conference",
+        "title": "Conference",
+        "summary": "Dealer conferences, tech summits and business forums.",
+        "events": [
+          "Sony Strategic Dealer Conference 2025",
+          "Cisco Engage 2022",
+          "Samsung Innovation Campus Tech Day 2025",
+          "Heineken Festival 2025",
+          "LG Strategic Dealer Conference"
+        ]
+      },
+      {
+        "id": "launching",
+        "title": "Launching Event",
+        "summary": "Product launches, brand zones and film premieres.",
+        "events": [
+          "Tecno Spark 20 Pro+ launch",
+          "Dyson Airwrap Co-anda 2X launch",
+          "MobiFone \"Loa Thần Tài\" speaker launch",
+          "Nguyễn Kim Brandzone 2025",
+          "BYD Seal 05 DM-i Super Hybrid",
+          "Film premiere x CGV"
+        ]
+      },
+      {
+        "id": "entertainment",
+        "title": "Entertainment",
+        "summary": "Beauty pageants, concerts and brand experiences.",
+        "events": [
+          "The Face Trí Đức 2024 & Trí Đức Spring Concert 2025",
+          "Miss & Mister UFM 2023",
+          "Intel Tech Camp 2023",
+          "Milo \"Khuấy kiểu nào cũng ngon đỉnh\"",
+          "Anessa Sunshine Project"
+        ]
+      },
+      {
+        "id": "esports",
+        "title": "Esports & Sports",
+        "summary": "Tournaments, viewing parties, gaming and sports community events.",
+        "events": [
+          "Vietnam GameVerse 2024 & 2025",
+          "Arena of Valor - Đấu trường Danh vọng",
+          "PUBG Mobile",
+          "Valorant Champions Paris 2025 Viewing Party",
+          "Audition 17th & 18th Birthday",
+          "League of Legends",
+          "Script-free hosting with Độ Mixi",
+          "Tiger Cup"
+        ]
+      },
+      {
+        "id": "tv",
+        "title": "TV Show & Virtual Event",
+        "summary": "Television, radio and virtual events.",
+        "events": [
+          "HTV7 collaboration",
+          "HTV9 collaboration",
+          "VOH FM 95.6MHz",
+          "Kênh 14"
+        ]
+      }
+    ]
+  },
+  "gallery": {
+    "eyebrow": "Events",
+    "title": "Event gallery",
+    "intro": "Moments from the programmes Thúy Vy has been part of.",
+    "filterLabel": "Filter by category",
+    "all": "All",
+    "open": "Enlarge photo",
+    "counter": "{i} / {n}",
+    "items": [
+      { "img": "gallery/gala-1", "field": "gala", "caption": "Shine The Night - Grab Year-End Party 2022" },
+      { "img": "gallery/conference-1", "field": "conference", "caption": "Sony Strategic Dealer Conference 2025" },
+      { "img": "gallery/launching-1", "field": "launching", "caption": "Tecno Spark 20 Pro+ launch" },
+      { "img": "gallery/entertainment-1", "field": "entertainment", "caption": "The Face Trí Đức 2024" },
+      { "img": "gallery/esports-1", "field": "esports", "caption": "Vietnam GameVerse 2025" },
+      { "img": "gallery/tv-1", "field": "tv", "caption": "HTV7" },
+      { "img": "gallery/gala-2", "field": "gala", "caption": "Audi New Year Eve Party" },
+      { "img": "gallery/conference-2", "field": "conference", "caption": "Cisco Engage 2022" },
+      { "img": "gallery/launching-2", "field": "launching", "caption": "Dyson Airwrap Co-anda 2X launch" },
+      { "img": "gallery/entertainment-2", "field": "entertainment", "caption": "Miss & Mister UFM 2023" },
+      { "img": "gallery/esports-2", "field": "esports", "caption": "Valorant Champions Paris 2025 Viewing Party" },
+      { "img": "gallery/tv-2", "field": "tv", "caption": "VOH FM 95.6MHz" },
+      { "img": "gallery/gala-3", "field": "gala", "caption": "MICO Gala 2024" },
+      { "img": "gallery/conference-3", "field": "conference", "caption": "Samsung Innovation Campus Tech Day 2025" },
+      { "img": "gallery/launching-3", "field": "launching", "caption": "BYD Seal 05 DM-i Super Hybrid" },
+      { "img": "gallery/entertainment-3", "field": "entertainment", "caption": "Anessa Sunshine Project" },
+      { "img": "gallery/esports-3", "field": "esports", "caption": "Arena of Valor - Đấu trường Danh vọng" },
+      { "img": "gallery/tv-3", "field": "tv", "caption": "Kênh 14" }
+    ]
+  },
+  "clients": {
+    "eyebrow": "Partners",
+    "title": "Trusted by",
+    "list": [
+      "HTV7", "HTV9", "HGV", "VOH", "Kênh 14", "Shell", "Grab", "Unilever", "Vingroup", "VFF", "PNJ",
+      "ASUS", "LG", "Intel", "VNG Games", "VTC Game", "MSI", "La Roche-Posay", "Shiseido", "Generali",
+      "Audi", "Ford", "AIESEC", "Nguyễn Kim", "Đất Xanh Group", "Heineken Vietnam", "Tiger", "VIB",
+      "ACB", "Sony", "MobiFone", "Samsung", "Cisco"
+    ],
+    "more": "and more than 200 other partners"
+  },
+  "testimonials": {
+    "eyebrow": "Testimonials",
+    "title": "What clients say",
+    "label": "Client testimonials",
+    "slide": "Testimonial {i} of {n}",
+    "prev": "Previous testimonial",
+    "next": "Next testimonial",
+    "goTo": "Go to testimonial {i}",
+    "items": [
+      { "quote": "You did a good job! You have a good voice.", "name": "Professor Kwon Han Jin", "role": "CEO, Ultra V Korea" },
+      { "quote": "I was so happy to work with Thúy Vy! She improvised everything quickly and brilliantly. Many parts came up that weren't in the MC script, yet she still hosted smoothly and handled every situation superbly. Hope to see you again soon, Vy.", "name": "Ms. Nguyen Thuy Anh Thu", "role": "Head of TV Department, Sony Vietnam" },
+      { "quote": "Vy hosted brilliantly. The programme had many changes and some major hiccups, yet she still did an excellent job. Quick on her feet. Simply wonderful!", "name": "Mr. Truong Lap Hong", "role": "CEO, Gia Thanh Co., Ltd." },
+      { "quote": "Today's programme was a success. Everything was wonderful, especially MC Thúy Vy.", "name": "Mr. Hồ Trung Hiếu", "role": "National Sales Director, LG Electronics" },
+      { "quote": "Today's programme was a huge success. Thúy Vy hosted so well, didn't she? Very flexible and incredibly smooth. Nothing to fault at all. Let's book Vy to host in Hanoi.", "name": "Board of Management", "role": "MobiFone Telecommunications Corporation" },
+      { "quote": "Thank you so much, Thúy Vy - thanks to you, everything went smoothly today.", "name": "Mr. Thân Trung Nghĩa", "role": "Director, vHost" },
+      { "quote": "Thúy Vy is very professional. You lit up the stage today and everything was wonderful. We'll be inviting you back for our upcoming programmes!", "name": "Ms. Nguyễn Cẩm Chi", "role": "Deputy CEO, Vietnam Institute of Directors (VIOD)" },
+      { "quote": "We had technical issues, but luckily Thúy Vy handled it in time. My boss couldn't stop praising her. A fantastic MC - we'll contact you again next time, so please keep your schedule open for us!", "name": "Ms. Huỳnh Ngọc Mỹ Hiền", "role": "Assistant to the Director, vHost" }
+    ]
+  },
+  "contact": {
+    "eyebrow": "Contact",
+    "title": "Book MC Thúy Vy",
+    "intro": "Share your event details and Thúy Vy will confirm availability and send a quote as soon as possible.",
+    "infoTitle": "Get in touch",
+    "labels": {
+      "phone": "Phone",
+      "zalo": "Zalo",
+      "email": "Email",
+      "facebook": "Facebook",
+      "tiktok": "TikTok",
+      "instagram": "Instagram"
+    },
+    "pending": "Contact details are being updated. Please send your request via the booking form.",
+    "form": {
+      "title": "Booking request",
+      "name": "Full name",
+      "company": "Company",
+      "reach": "Phone or email",
+      "reachHint": "So Thúy Vy can get back to you",
+      "date": "Event date",
+      "type": "Event type",
+      "typePlaceholder": "Select an event type",
+      "typeOther": "Other",
+      "location": "Venue / city",
+      "message": "Message",
+      "messagePlaceholder": "Guest count, running time, hosting language, special requests...",
+      "required": "required",
+      "submit": "Send request",
+      "sending": "Sending...",
+      "success": "Thank you! Your request has been sent and Thúy Vy will reply as soon as possible.",
+      "error": "We couldn't send your request. Please try again or send it by email.",
+      "mailto": "Send by email",
+      "mailtoNote": "This opens your email app with the details pre-filled.",
+      "invalid": "Please complete the required fields.",
+      "subject": "Booking request for MC Thúy Vy"
+    }
+  },
+  "mobileBar": {
+    "call": "Call",
+    "zalo": "Zalo",
+    "book": "Book"
+  },
+  "footer": {
+    "thanks": "Thank you",
+    "line": "With sincere thanks to every partner for your trust.",
+    "rights": "All rights reserved.",
+    "top": "Back to top"
+  }
+}
