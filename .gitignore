@@ -1,3 +1,10 @@
 node_modules/
 .DS_Store
 assets/thumbs/*.tmp.jpg
+# Công cụ báo cáo video: không bao giờ commit số liệu thật
+bao-cao-video/input*/
+bao-cao-video/output*/
+bao-cao-video/.venv/
+bao-cao-video/samples/demo/output/
+bao-cao-video/loi-gan-nhat.txt
+__pycache__/

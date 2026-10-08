@@ -1,0 +1,147 @@
+# =====================================================================
+# MẪU HỒ SƠ THƯƠNG HIỆU MỚI
+# Cách dùng: chép cả thư mục này thành config/brands/<ten-brand> (không bắt
+# đầu bằng dấu _), rồi sửa các mục bên dưới. Thư mục bắt đầu bằng "_" bị bỏ qua.
+# =====================================================================
+
+ten: "Tên thương hiệu"
+
+# Thư mục chứa file đầu vào / kết quả của thương hiệu này (tính từ thư mục tool).
+# Thương hiệu khác PHẢI dùng thư mục khác (vd input-tenbrand / output-tenbrand).
+thu_muc_input: "input-ten-brand"   # PHẢI khác thương hiệu khác
+thu_muc_output: "output-ten-brand"
+
+# Chỉ phân tích video thoả cả 2 điều kiện (không phân biệt hoa thường, dấu cách thừa)
+nguoi_lam: "Hưng"
+status_da_air: "Đã air"
+
+# true = cập nhật số liệu cho video của mọi người trong tab 03;
+# false = chỉ video của bạn (an toàn hơn, không động vào dòng của đồng nghiệp)
+cap_nhat_tat_ca_nguoi_lam: false
+
+# Dấu thập phân khi xuất TSV để dán vào Google Sheet.
+# Sheet dùng ngôn ngữ Việt Nam (Tệp > Cài đặt > Ngôn ngữ = Việt Nam) -> ","
+# Sheet dùng Hoa Kỳ -> "."
+dau_thap_phan: ","
+
+# ---------------------------------------------------------------------
+# Tab 03 Content Calendars
+# ---------------------------------------------------------------------
+tab_lich: "03 Content Calendars"   # tool cũng tự tìm tab có tên bắt đầu bằng "03"
+dong_tieu_de: 5
+
+# Cột: khoá nội bộ -> [chữ cột mặc định, tên tiêu đề ở dòng 5].
+# Tool tìm theo TÊN TIÊU ĐỀ trước; không thấy mới dùng chữ cột.
+# => Nếu chèn thêm cột vào sheet, tool vẫn chạy đúng miễn tên tiêu đề giữ nguyên.
+cot:
+  tuan:                [A,  "Tuần"]
+  thoi_gian:           [B,  "Thời gian"]
+  kenh:                [C,  "Kênh"]
+  pillar:              [D,  "Pillar/Theme"]
+  loai_noi_dung:       [E,  "Loại nội dung"]
+  chu_de:              [F,  "Chủ đề/Deliverable"]
+  phase:               [G,  "Phase"]
+  status:              [H,  "Status"]
+  ghi_chu:             [I,  "Ghi chú"]
+  link_tiktok:         [J,  "Link TikTok"]
+  ngay_dang:           [K,  "Ngày đăng"]
+  link_fb:             [L,  "Link FB"]
+  nguoi_lam:           [M,  "Người làm"]
+  nhom_noi_dung:       [N,  "Nhóm nội dung"]
+  thoi_luong:          [O,  "Thời lượng (s)"]
+  tiktok_views:        [P,  "TikTok views"]
+  tiktok_likes:        [Q,  "TikTok likes"]
+  tiktok_shares:       [R,  "TikTok shares"]
+  fb_xem_3s:           [S,  "FB lượt xem 3s"]
+  fb_reach:            [T,  "FB reach"]
+  fb_xem_tb:           [U,  "FB xem TB (s)"]
+  fb_chay_ads:         [V,  "FB chạy ads"]
+  tong_views:          [W,  "Tổng views"]
+  link_youtube:        [X,  "Link YouTube"]
+  youtube_views:       [Y,  "YouTube views"]
+  tiktok_er:           [Z,  "TikTok ER"]
+  fb_hook_rate:        [AA, "FB hook rate"]
+  campaign_tiktok:     [AB, "Campaign TikTok ads"]
+  chi_phi_tiktok:      [AC, "Chi phí TikTok ads phân bổ"]
+  cpv_tiktok:          [AD, "CPV TikTok"]
+  fb_nguoi_xem_3s:     [AE, "FB người xem ≥3s"]
+  chi_phi_fb:          [AF, "Chi phí FB ads"]
+  cpv_fb_3s:           [AG, "CPV FB 3s"]
+  fb_ads_luot_phat:    [AH, "FB ads lượt phát"]
+  fb_ads_xem_25:       [AI, "FB ads xem 25%"]
+  fb_ads_xem_50:       [AJ, "FB ads xem 50%"]
+  ty_le_xem_25:        [AK, "Tỷ lệ xem 25%"]
+  ty_le_xem_50:        [AL, "Tỷ lệ xem 50%"]
+
+# Dải cột số liệu mà tool được phép xuất TSV (từ cột đầu đến cột cuối, theo khoá).
+# Trong dải này, cột nào có CÔNG THỨC sẽ tự động bị loại khỏi TSV.
+dai_cot_so_lieu: [tiktok_views, ty_le_xem_50]
+
+# Cột chữ: chỉ điền khi ô đang trống (không đè chữ bạn đã gõ)
+cot_chu_chi_dien_khi_trong: [fb_chay_ads, campaign_tiktok, link_youtube]
+gia_tri_fb_chay_ads: "Có"
+
+# Chỉ số tính lại sau khi ghép số mới (vì công thức trong file tải về chưa tính lại).
+# Dùng khoá cột ở trên, + - * / và ngoặc. Chia cho 0 / thiếu số -> để trống.
+# Sửa cho khớp công thức thật trong sheet của bạn nếu khác.
+chi_so_tinh:
+  tong_views:   "tiktok_views + fb_xem_3s + youtube_views"
+  tiktok_er:    "(tiktok_likes + tiktok_shares) / tiktok_views"
+  fb_hook_rate: "fb_xem_3s / fb_reach"
+  cpv_tiktok:   "chi_phi_tiktok / tiktok_views"
+  cpv_fb_3s:    "chi_phi_fb / fb_nguoi_xem_3s"
+  ty_le_xem_25: "fb_ads_xem_25 / fb_ads_luot_phat"
+  ty_le_xem_50: "fb_ads_xem_50 / fb_ads_luot_phat"
+
+# ---------------------------------------------------------------------
+# Giai đoạn (cột G Phase + input/thang-sau.yaml)
+# tu_khoa: chữ xuất hiện trong tên giai đoạn (không phân biệt dấu/hoa thường).
+#          Từ khoá dài hơn được ưu tiên ("sau mở bán" thắng "mở bán").
+# tuong_tu: giai đoạn dùng bổ sung khi thiếu dữ liệu, theo thứ tự ưu tiên.
+# ---------------------------------------------------------------------
+giai_doan:
+  bau:
+    ten: "BAU (tháng thường)"
+    tu_khoa: ["bau", "back to school", "thuong ngay", "binh thuong"]
+    tuong_tu: [sau_mo_ban]
+  truoc_announce:
+    ten: "Before Announce"
+    tu_khoa: ["before announce", "truoc announce", "teaser", "pre-announce"]
+    tuong_tu: [announce, bau]
+  announce:
+    ten: "Announce"
+    tu_khoa: ["announce", "ra mat", "keynote"]
+    tuong_tu: [truoc_announce, pre_order]
+  pre_order:
+    ten: "Pre-order"
+    tu_khoa: ["pre-order", "preorder", "pre order", "dat truoc"]
+    tuong_tu: [announce, mo_ban]
+  mo_ban:
+    ten: "Mở bán"
+    tu_khoa: ["mo ban", "launch day", "sale day"]
+    tuong_tu: [pre_order, sau_mo_ban]
+  sau_mo_ban:
+    ten: "Sau mở bán"
+    tu_khoa: ["sau mo ban", "post launch", "post-launch"]
+    tuong_tu: [bau, mo_ban]
+giai_doan_mac_dinh: bau
+
+# ---------------------------------------------------------------------
+# Nhóm nội dung (cột N). giai_doan: giai đoạn nhóm này được đề xuất
+# ("tat_ca" = mọi giai đoạn). de_xuat: false = chỉ thống kê, không chia video.
+# ---------------------------------------------------------------------
+nhom_noi_dung:
+  - ten: "Khuyến mãi"
+    giai_doan: tat_ca
+  - ten: "Hướng dẫn / Review"
+    giai_doan: tat_ca
+  - ten: "Sản phẩm mới"
+    giai_doan: [truoc_announce, announce, pre_order]
+  - ten: "Sự kiện / Social proof"
+    giai_doan: tat_ca
+  - ten: "Khác"
+    giai_doan: tat_ca
+    de_xuat: false
+
+# Mỗi sự kiện ghi trong thang-sau.yaml đảm bảo nhóm này có ít nhất 1 video
+nhom_su_kien: "Sự kiện / Social proof"

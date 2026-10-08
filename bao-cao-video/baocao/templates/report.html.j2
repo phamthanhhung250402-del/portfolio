@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Báo cáo video {{ brand.ten }} · {{ ten_thang(pt.thang_moi) }}</title>
+<script src="{{ chart_js }}"></script>
+<style>
+:root {
+  color-scheme: light;
+  --bg: #f5f5f7; --surface: #ffffff; --surface-2: #fbfbfd; --line: #e3e3e8;
+  --text: #1d1d1f; --text-2: #55555c; --muted: #86868b;
+  --accent: #0071e3; --series-1: #2a78d6; --series-1-soft: #cde2fb;
+  --good: #1a7f37; --good-bg: #e6f4ea; --bad: #c4321b; --bad-bg: #fdecea; --warn: #9a6700; --warn-bg: #fff4d6;
+  --chip: #eef0f4; --hi: #e8f1fc;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --bg: #000000; --surface: #1c1c1e; --surface-2: #242426; --line: #38383a;
+    --text: #f5f5f7; --text-2: #c7c7cc; --muted: #8e8e93;
+    --accent: #2997ff; --series-1: #3987e5; --series-1-soft: #1c3a5e;
+    --good: #4cc26a; --good-bg: #13301c; --bad: #ff6b5b; --bad-bg: #3a1a16; --warn: #e3b341; --warn-bg: #33290f;
+    --chip: #2c2c2e; --hi: #16283d;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #000000; --surface: #1c1c1e; --surface-2: #242426; --line: #38383a;
+  --text: #f5f5f7; --text-2: #c7c7cc; --muted: #8e8e93;
+  --accent: #2997ff; --series-1: #3987e5; --series-1-soft: #1c3a5e;
+  --good: #4cc26a; --good-bg: #13301c; --bad: #ff6b5b; --bad-bg: #3a1a16; --warn: #e3b341; --warn-bg: #33290f;
+  --chip: #2c2c2e; --hi: #16283d;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--text);
+  font-family: -apple-system, "SF Pro Display", "SF Pro Text", BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  font-size: 15px; line-height: 1.45; -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1320px; margin: 0 auto; padding: 32px 16px 64px; }
+header h1 { font-size: 34px; letter-spacing: -0.02em; margin: 0 0 4px; font-weight: 700; }
+header p { margin: 0; color: var(--text-2); }
+nav { position: sticky; top: 0; z-index: 5; background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(16px); -webkit-backdrop-filter: saturate(180%) blur(16px);
+  margin: 20px -16px 8px; padding: 10px 16px; display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; }
+nav a { white-space: nowrap; text-decoration: none; color: var(--text); background: var(--surface); border: 1px solid var(--line);
+  border-radius: 980px; padding: 6px 14px; font-size: 13px; }
+nav a:hover { border-color: var(--accent); color: var(--accent); }
+section { margin-top: 36px; }
+h2 { font-size: 24px; letter-spacing: -0.015em; margin: 0 0 4px; }
+.sub { color: var(--text-2); margin: 0 0 16px; font-size: 14px; }
+.card { background: var(--surface); border-radius: 18px; padding: 20px; border: 1px solid var(--line); }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.kpi { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px 18px; min-width: 0; }
+.kpi .lbl { color: var(--text-2); font-size: 13px; }
+.kpi .val { font-size: 30px; font-weight: 700; letter-spacing: -0.02em; margin: 2px 0; font-variant-numeric: tabular-nums; }
+.kpi .note { color: var(--muted); font-size: 12px; }
+.d { font-size: 12px; font-weight: 600; }
+.d.tot { color: var(--good); } .d.xau { color: var(--bad); } .d.phang { color: var(--muted); }
+.tbl-wrap { overflow-x: auto; border-radius: 18px; border: 1px solid var(--line); background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { padding: 10px 10px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-weight: 600; color: var(--text-2); font-size: 12px; background: var(--surface-2); position: sticky; top: 0; white-space: nowrap; }
+tr:last-child td { border-bottom: 0; }
+td.n, th.n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.chip { display: inline-block; padding: 2px 8px; border-radius: 980px; background: var(--chip); color: var(--text-2); font-size: 11.5px; white-space: nowrap; }
+.chip.test { background: var(--warn-bg); color: var(--warn); }
+.chip.ok { background: var(--good-bg); color: var(--good); }
+.bar { position: relative; height: 6px; border-radius: 3px; background: var(--chip); min-width: 70px; margin-top: 4px; }
+.bar > span { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 3px; background: var(--series-1); }
+.score { font-weight: 700; font-variant-numeric: tabular-nums; }
+.up { color: var(--good); font-weight: 600; } .down { color: var(--bad); font-weight: 600; } .flat { color: var(--muted); }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.title-cell { min-width: 180px; max-width: 280px; }
+.title-cell a { color: var(--text); text-decoration: none; }
+.title-cell a:hover { color: var(--accent); }
+.links a { font-size: 11.5px; color: var(--accent); text-decoration: none; margin-right: 8px; }
+.charts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.chart-box { background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 16px; }
+.chart-box h3 { font-size: 14px; margin: 0 0 2px; }
+.chart-box p { font-size: 12px; color: var(--muted); margin: 0 0 8px; }
+.chart-box canvas { width: 100% !important; height: 200px !important; }
+td.hl { background: var(--hi); font-weight: 600; }
+.blocks { display: grid; gap: 12px; }
+.blk { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; background: var(--surface); border: 1px solid var(--line); border-radius: 18px; padding: 14px 18px; }
+.blk .big { font-size: 20px; font-weight: 700; }
+.blk .meta { color: var(--text-2); font-size: 13px; flex: 1; min-width: 220px; }
+button.copy { appearance: none; border: 0; background: var(--accent); color: #fff; font: inherit; font-weight: 600; font-size: 14px;
+  padding: 9px 18px; border-radius: 980px; cursor: pointer; }
+button.copy.done { background: var(--good); }
+.cell { font-family: ui-monospace, "SF Mono", Menlo, monospace; background: var(--chip); padding: 2px 8px; border-radius: 6px; font-weight: 700; }
+ul.warn { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+ul.warn li { background: var(--warn-bg); color: var(--text); border-radius: 12px; padding: 10px 14px; font-size: 13.5px; }
+ul.warn li::before { content: "⚠︎ "; color: var(--warn); font-weight: 700; }
+.note-box { background: var(--surface-2); border: 1px dashed var(--line); border-radius: 14px; padding: 12px 16px; font-size: 13px; color: var(--text-2); }
+.phase-list { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.phase { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 10px 14px; font-size: 13px; }
+.phase b { display: block; font-size: 14px; }
+details summary { cursor: pointer; color: var(--accent); font-size: 13.5px; margin: 10px 0; }
+footer { margin-top: 48px; color: var(--muted); font-size: 12.5px; }
+.empty { color: var(--muted); font-size: 13.5px; }
+@media (max-width: 900px) {
+  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .charts { grid-template-columns: 1fr; }
+  header h1 { font-size: 28px; }
+}
+@media (max-width: 1240px) { .grid2 { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>{{ brand.ten }} · {{ ten_thang(pt.thang_moi) }}</h1>
+  <p>Báo cáo video của {{ brand.raw.nguoi_lam }} (Status "{{ brand.raw.status_da_air }}") · đề xuất mix {{ ten_thang(ts.thang) }} · tạo lúc {{ tao_luc }}</p>
+  <p style="font-size:13px;color:var(--muted);margin-top:4px">Nguồn: {{ nguon.sheet }}{% if nguon.exports %} · {{ nguon.exports|length }} file export{% endif %}</p>
+</header>
+
+<nav>
+  <a href="#tong-quan">Tổng quan</a><a href="#xep-hang">Xếp hạng nhóm</a><a href="#video">Top / bottom video</a>
+  <a href="#thoi-luong">Thời lượng</a><a href="#mix">Mix {{ ten_thang(ts.thang) }}</a><a href="#tab03">Cập nhật tab 03</a>
+  <a href="#canh-bao">Cảnh báo dữ liệu{% if canh_bao or ghep.khong_ghep_video %} ({{ canh_bao|length + ghep.khong_ghep_video|length }}){% endif %}</a>
+</nav>
+
+<section id="tong-quan">
+  <h2>Tổng quan {{ ten_thang(pt.thang_moi) }}</h2>
+  <p class="sub">{% if pt.thang_truoc %}So với {{ ten_thang(pt.thang_truoc) }}.{% else %}Chưa có tháng trước để so sánh.{% endif %} Chỉ số chi phí và giữ chân lấy median từng video để không bị ngân sách ads làm méo.</p>
+  <div class="kpis">
+  {% for lbl, val, d, note in kpi %}
+    <div class="kpi">
+      <div class="lbl">{{ lbl }}</div>
+      <div class="val">{{ val }}</div>
+      {% if d %}<div class="d {{ d.lop }}">{{ d.mui }} {{ d.chu }}</div>{% endif %}
+      <div class="note">{{ note }}</div>
+    </div>
+  {% endfor %}
+  </div>
+</section>
+
+<section id="xep-hang">
+  <h2>Xếp hạng nhóm nội dung</h2>
+  <p class="sub">Điểm 0-100 = trung bình có trọng số của thứ hạng phần trăm ({% for k, g in brand.weights.nhom_chi_so.items() %}{{ g.ten }} {{ g.trong_so }}%{% if not loop.last %}, {% endif %}{% endfor %}), so với chuẩn giai đoạn của {{ ten_thang(ts.thang) }}. Số trong bảng là median. Nhóm dưới {{ pt.toi_thieu }} video không xếp hạng. Xu hướng: điểm {{ ten_thang(pt.thang_moi) }} so với tháng trước.</p>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr>
+      <th>Hạng</th><th>Nhóm nội dung</th><th>Điểm</th><th>Xu hướng</th><th class="n">Video</th>
+      <th class="n">CPV TikTok</th><th class="n">CPV FB 3s</th><th class="n">Xem TB</th><th class="n">Xem 50%</th>
+      <th class="n">Hook</th><th class="n">ER</th><th class="n">Median views</th><th>Thời lượng tốt nhất</th>
+    </tr></thead>
+    <tbody>
+    {% for g in nhom_bang %}
+      <tr>
+        <td class="n">{{ g.hang or "–" }}</td>
+        <td style="min-width:210px"><b>{{ g.ten }}</b><br>{% if g.ngoai_giai_doan %}<span class="chip">Không thuộc giai đoạn {{ ten_thang(ts.thang) }}</span>{% elif g.xep_hang %}<span class="chip ok">Đủ dữ liệu</span>{% else %}<span class="chip test">Thử nghiệm - chưa đủ dữ liệu</span>{% endif %}</td>
+        {% set d = g.diem if g.diem is not none else g.diem_ls %}
+        <td style="min-width:90px">{% if d is not none %}<span class="score">{{ "%.0f"|format(d) }}</span><div class="bar"><span style="width:{{ d }}%"></span></div>{% else %}–{% endif %}</td>
+        <td>{% if g.xu_huong is none %}<span class="flat" title="cần ≥2 video mỗi tháng">–</span>{% elif g.xu_huong >= pt.nguong_xu_huong %}<span class="up">▲ +{{ "%.0f"|format(g.xu_huong) }}</span>{% elif g.xu_huong <= -pt.nguong_xu_huong %}<span class="down">▼ {{ "%.0f"|format(g.xu_huong) }}</span>{% else %}<span class="flat">→ {{ "%+.0f"|format(g.xu_huong) }}</span>{% endif %}</td>
+        <td class="n">{{ g.n }}<br><span style="color:var(--muted);font-size:11.5px">tháng này {{ g.n_moi }}</span></td>
+        <td class="n">{{ g.trung_vi.cpv_tiktok|tien }}</td>
+        <td class="n">{{ g.trung_vi.cpv_fb_3s|tien }}</td>
+        <td class="n">{{ g.trung_vi.fb_xem_tb|giay }}</td>
+        <td class="n">{{ g.trung_vi.ty_le_xem_50|pt }}</td>
+        <td class="n">{{ g.trung_vi.fb_hook_rate|pt }}</td>
+        <td class="n">{{ g.trung_vi.tiktok_er|pt(2) }}</td>
+        <td class="n">{{ g.trung_vi.tiktok_views|gon }}</td>
+        <td>{{ g.muc_tieu_tl or "–" }}</td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+</section>
+
+<section id="video">
+  <h2>Top 10 &amp; bottom 10 video · {{ ten_thang(pt.thang_moi) }}</h2>
+  <p class="sub">Xếp theo điểm từng video so với toàn bộ {{ pt.videos|length }} video đã air của bạn.</p>
+  <div class="grid2">
+  {% for ten_bang, ds in [("Top", pt.top), ("Bottom", pt.bottom)] %}
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>{{ ten_bang }}</th><th>Video</th><th class="n">Dài</th><th class="n">Views</th><th class="n">CPV TT</th><th class="n">Xem TB</th><th class="n">Điểm</th></tr></thead>
+      <tbody>
+      {% for v in ds %}
+        <tr>
+          <td class="n">{{ loop.index }}</td>
+          <td class="title-cell"><div>{{ v.chu_de }}</div><span class="chip">{{ v.nhom }}</span>
+            <span class="links">{% if v.link_tiktok %}<a href="{{ v.link_tiktok }}" target="_blank" rel="noopener">TikTok</a>{% endif %}{% if v.link_fb %}<a href="{{ v.link_fb }}" target="_blank" rel="noopener">FB</a>{% endif %}</span></td>
+          <td class="n">{{ (v.thoi_luong|so) ~ "s" if v.thoi_luong else "–" }}</td>
+          <td class="n">{{ v.m.tiktok_views|gon }}</td>
+          <td class="n">{{ v.m.cpv_tiktok|tien }}</td>
+          <td class="n">{{ v.m.fb_xem_tb|giay }}</td>
+          <td class="n score">{{ "%.0f"|format(v.diem) }}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="7" class="empty">Chưa đủ video có số liệu.</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  {% endfor %}
+  </div>
+</section>
+
+<section id="thoi-luong">
+  <h2>Thời lượng</h2>
+  <p class="sub">Toàn bộ {{ pt.videos|length }} video, chia theo khoảng thời lượng. Rê chuột lên cột để xem số video.</p>
+  <div class="charts">
+    <div class="chart-box"><h3>Điểm hiệu quả (median)</h3><p>0-100, cao hơn là tốt hơn</p><canvas id="c-diem" role="img" aria-label="Điểm hiệu quả theo khoảng thời lượng"></canvas></div>
+    <div class="chart-box"><h3>CPV TikTok (median, đ)</h3><p>thấp hơn là tốt hơn</p><canvas id="c-cpv" role="img" aria-label="CPV TikTok theo khoảng thời lượng"></canvas></div>
+    <div class="chart-box"><h3>FB xem TB (median, giây)</h3><p>cao hơn là tốt hơn</p><canvas id="c-xem" role="img" aria-label="Thời gian xem trung bình theo khoảng thời lượng"></canvas></div>
+  </div>
+  <details>
+    <summary>Xem bảng số liệu thời lượng theo từng nhóm</summary>
+    <div class="tbl-wrap">
+    <table>
+      <thead><tr><th>Nhóm nội dung</th>{% for nh in pt.nhan_tl %}<th class="n">{{ nh }}</th>{% endfor %}<th>Mục tiêu</th></tr></thead>
+      <tbody>
+      <tr><td><b>Toàn kênh</b></td>{% for x in pt.tl_kenh %}<td class="n">{% if x.n %}{{ "%.0f"|format(x.diem) if x.diem is not none else "–" }} <span style="color:var(--muted)">({{ x.n }})</span>{% else %}–{% endif %}</td>{% endfor %}<td></td></tr>
+      {% for g in nhom_bang %}
+        <tr><td>{{ g.ten }}</td>
+        {% for nh in pt.nhan_tl %}{% set x = g.thoi_luong[nh] %}
+          <td class="n{% if g.muc_tieu_tl == nh %} hl{% endif %}">{% if x.n %}{{ "%.0f"|format(x.diem) if x.diem is not none else "–" }} <span style="color:var(--muted)">({{ x.n }})</span>{% else %}–{% endif %}</td>
+        {% endfor %}
+        <td style="font-size:12.5px">{{ g.ly_do_tl }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+    <p class="sub" style="margin-top:8px">Ô tô đậm = khoảng thời lượng mục tiêu: khoảng có điểm median cao nhất trong các khoảng có từ {{ brand.weights.thoi_luong.so_video_toi_thieu_moi_khoang }} video trở lên. Số trong ngoặc = số video.</p>
+  </details>
+</section>
+
+<section id="mix">
+  <h2>Mix đề xuất {{ ten_thang(ts.thang) }} · {{ tong_mix }} video</h2>
+  <p class="sub">{{ (100 - brand.weights.phan_bo.ty_le_thu_nghiem * 100)|round|int }}% chia theo điểm (nhóm đang chạy tối thiểu {{ brand.weights.phan_bo.toi_thieu_moi_nhom }} video, không nhóm nào quá {{ (brand.weights.phan_bo.toi_da_ty_trong * 100)|round|int }}% = {{ pt.mix_kq.tran }} video), {{ (brand.weights.phan_bo.ty_le_thu_nghiem * 100)|round|int }}% cho slot thử nghiệm. File để dán vào sheet: <b>de-xuat-mix-thang-sau.tsv</b>.</p>
+  <div class="phase-list">
+  {% for g in ts.giai_doan %}
+    <div class="phase"><b>{{ g.ten }}</b>{% if g.tu and g.den %}{{ g.tu.strftime("%d/%m") }} - {{ g.den.strftime("%d/%m") }} · {% endif %}{{ "%.0f"|format(g.ty_le * 100) }}% tháng<br>
+      <span style="color:var(--muted)">Chuẩn so sánh: {{ pt.chuan_gd[g.loai].mo_ta }}</span></div>
+  {% endfor %}
+  </div>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Nhóm nội dung</th><th class="n">Số video</th><th>Tỷ trọng</th><th>Thời lượng mục tiêu</th><th>Lý do</th><th>Độ tin cậy</th></tr></thead>
+    <tbody>
+    {% for d in pt.mix %}
+      <tr{% if d.so_video == 0 %} style="opacity:.55"{% endif %}>
+        <td><b>{{ d.ten }}</b>{% if d.thu_nghiem %}<br><span class="chip test">{{ d.thu_nghiem }} slot thử nghiệm</span>{% endif %}</td>
+        <td class="n score" style="font-size:18px">{{ d.so_video }}</td>
+        <td style="min-width:110px">{{ d.ty_trong|pt(0) }}<div class="bar"><span style="width:{{ (d.so_video / max_mix * 100)|round(1) }}%"></span></div></td>
+        <td>{{ d.thoi_luong }}</td>
+        <td style="min-width:280px">{{ d.ly_do }}</td>
+        <td>{% if d.do_tin_cay.startswith("Thử") %}<span class="chip test">{{ d.do_tin_cay }}</span>{% else %}<span class="chip ok">{{ d.do_tin_cay }}</span>{% endif %}</td>
+      </tr>
+    {% endfor %}
+      <tr><td><b>Tổng</b></td><td class="n score" style="font-size:18px">{{ tong_mix }}</td><td>100%</td><td colspan="3"></td></tr>
+    </tbody>
+  </table>
+  </div>
+  {% if ts.giai_doan|length > 1 %}
+  <h3 style="margin:20px 0 8px;font-size:16px">Chia theo giai đoạn</h3>
+  <div class="tbl-wrap">
+  <table>
+    <thead><tr><th>Nhóm nội dung</th>{% for g in ts.giai_doan %}<th class="n">{{ g.ten }}</th>{% endfor %}</tr></thead>
+    <tbody>
+    {% for d in pt.mix if d.so_video %}
+      <tr><td>{{ d.ten }}</td>{% for g in ts.giai_doan %}<td class="n">{{ pt.theo_gd[d.ten][g.ten] or "–" }}</td>{% endfor %}</tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% endif %}
+  {% if ts.ghi_chu or ts.khuyen_mai or ts.su_kien %}
+  <div class="note-box" style="margin-top:12px">
+    {% for x in ts.ghi_chu %}<div>• {{ x }}</div>{% endfor %}
+    {% if ts.khuyen_mai %}<div>• Khuyến mãi: {{ ts.khuyen_mai|join("; ") }}</div>{% endif %}
+    {% if ts.su_kien %}<div>• Sự kiện: {% for s in ts.su_kien %}{{ s.ten }}{% if s.ngay %} ({{ s.ngay.strftime("%d/%m") }}){% endif %}{% if not loop.last %}; {% endif %}{% endfor %}</div>{% endif %}
+  </div>
+  {% endif %}
+  <p class="sub" style="margin-top:12px">Lấy ý tưởng: mở <b>brief-cho-claude.md</b>, copy toàn bộ và dán vào Claude.</p>
+</section>
+
+<section id="tab03">
+  <h2>Cập nhật tab 03 · {{ ten_thang(ghep.thang) }}</h2>
+  {% if khoi_tsv %}
+  <p class="sub">{{ ghep.cap_nhat|length }}/{{ ghep.muc_tieu|length }} video có số mới. Bấm <b>Sao chép</b>, vào Google Sheet bấm chọn đúng ô ghi bên cạnh, rồi bấm <b>Cmd + Shift + V</b>. Cột công thức đã được loại ra nên không bị đè. Dòng không có số mới giữ nguyên giá trị cũ.</p>
+  <div class="blocks">
+  {% for k in khoi_tsv %}
+    <div class="blk">
+      <div class="big">Khối {{ k.so }}</div>
+      <div class="meta">Dán vào ô <span class="cell">{{ k.o_dau }}</span> · phủ {{ k.vung }}<br>{{ k.ten_cot|join(" · ") }}</div>
+      <button class="copy" data-target="tsv-{{ k.so }}">Sao chép khối {{ k.so }}</button>
+      <textarea id="tsv-{{ k.so }}" hidden>{{ k.noi_dung }}</textarea>
+    </div>
+  {% endfor %}
+  </div>
+  <p class="sub" style="margin-top:10px">Cũng có sẵn dạng file trong thư mục <b>cap-nhat-tab03/</b> kèm <b>huong-dan-dan.txt</b>.</p>
+  {% else %}
+  <p class="empty">Không có số liệu mới để dán - kiểm tra thư mục input/exports/ và mục Cảnh báo dữ liệu.</p>
+  {% endif %}
+</section>
+
+<section id="canh-bao">
+  <h2>Cảnh báo dữ liệu</h2>
+  {% if ghep.khong_ghep_video %}
+  <p class="sub">Video tháng {{ ten_thang(ghep.thang) }} chưa ghép được số liệu - kiểm tra link trong sheet:</p>
+  <div class="tbl-wrap" style="margin-bottom:16px">
+  <table>
+    <thead><tr><th class="n">Dòng</th><th>Video</th><th>Vấn đề</th></tr></thead>
+    <tbody>
+    {% for v, ly_do in ghep.khong_ghep_video %}
+      <tr><td class="n">{{ v.dong }}</td><td class="title-cell">{{ v.gia_tri.chu_de or "(không tiêu đề)" }}</td><td>{{ ly_do|join("; ") }}</td></tr>
+    {% endfor %}
+    </tbody>
+  </table>
+  </div>
+  {% endif %}
+  {% if ghep.khong_ghep_dong %}
+  <details {% if ghep.khong_ghep_dong|length < 8 %}open{% endif %}>
+    <summary>{{ ghep.khong_ghep_dong|length }} dòng trong file export không khớp video nào trong sheet</summary>
+    <div class="tbl-wrap" style="margin-bottom:16px">
+    <table>
+      <thead><tr><th>File</th><th>Dòng</th><th class="n">Chi phí</th></tr></thead>
+      <tbody>
+      {% for f, mo_ta, cp in ghep.khong_ghep_dong %}
+        <tr><td>{{ f }}</td><td>{{ mo_ta }}</td><td class="n">{{ cp|tien if cp is not none else "–" }}</td></tr>
+      {% endfor %}
+      </tbody>
+    </table>
+    </div>
+  </details>
+  {% endif %}
+  {% if ghep.ghep_theo_ten %}
+  <p class="sub">Ghép theo TÊN quảng cáo (không có ID) - nên kiểm tra lại:</p>
+  <ul class="warn" style="margin-bottom:16px">
+    {% for f, ten, v in ghep.ghep_theo_ten %}<li>{{ f }}: "{{ ten }}" → dòng {{ v.dong }} "{{ v.gia_tri.chu_de }}"</li>{% endfor %}
+  </ul>
+  {% endif %}
+  {% if canh_bao %}
+  <ul class="warn">{% for c in canh_bao %}<li>{{ c }}</li>{% endfor %}</ul>
+  {% elif not ghep.khong_ghep_video and not ghep.khong_ghep_dong %}
+  <p class="empty">Không có cảnh báo.</p>
+  {% endif %}
+  <details>
+    <summary>File đã đọc</summary>
+    <div class="note-box">
+      <div>Sheet: {{ nguon.sheet }} (tab "{{ nguon.tab }}")</div>
+      {% for f in nguon.exports %}<div>{{ f.ten }} → {{ f.ten_loai }} ({{ f.dong|length }} dòng)</div>{% endfor %}
+    </div>
+  </details>
+</section>
+
+<footer>
+  Tạo bởi công cụ bao-cao-video · tính bằng quy tắc, không dùng AI · trọng số trong config/weights.yaml · biểu đồ Chart.js 4.4.1
+</footer>
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll("button.copy").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var ta = document.getElementById(b.dataset.target);
+      var text = ta.value;
+      var xong = function () { var t = b.textContent; b.textContent = "Đã sao chép ✓"; b.classList.add("done");
+        setTimeout(function () { b.textContent = t; b.classList.remove("done"); }, 2500); };
+      var cu = function () { ta.hidden = false; ta.select(); document.execCommand("copy"); ta.hidden = true; xong(); };
+      if (navigator.clipboard && window.isSecureContext) { navigator.clipboard.writeText(text).then(xong, cu); } else { cu(); }
+    });
+  });
+
+  if (!window.Chart) {
+    document.querySelectorAll(".chart-box canvas").forEach(function (c) {
+      var p = document.createElement("p"); p.className = "empty";
+      p.textContent = "Không tải được biểu đồ (máy cần kết nối internet). Số liệu vẫn có trong bảng bên dưới.";
+      c.replaceWith(p);
+    });
+    return;
+  }
+  var d = {{ tl_chart_json|safe }};
+  var css = getComputedStyle(document.documentElement);
+  var mau = css.getPropertyValue("--series-1").trim();
+  var chu = css.getPropertyValue("--text-2").trim();
+  var luoi = css.getPropertyValue("--line").trim();
+  Chart.defaults.font.family = '-apple-system, "SF Pro Display", BlinkMacSystemFont, sans-serif';
+  Chart.defaults.color = chu;
+  function ve(id, data, fmt) {
+    new Chart(document.getElementById(id), {
+      type: "bar",
+      data: { labels: d.nhan, datasets: [{ data: data, backgroundColor: mau, borderRadius: { topLeft: 4, topRight: 4 }, borderSkipped: "bottom", maxBarThickness: 44 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false,
+        plugins: { legend: { display: false }, tooltip: { callbacks: { label: function (c) { return fmt(c.raw) + "  ·  " + d.n[c.dataIndex] + " video"; } } } },
+        scales: { x: { grid: { display: false } }, y: { beginAtZero: true, grid: { color: luoi }, border: { display: false } } }
+      }
+    });
+  }
+  var vn = function (x, so) { return x == null ? "–" : x.toLocaleString("vi-VN", { maximumFractionDigits: so }); };
+  ve("c-diem", d.diem, function (x) { return "Điểm " + vn(x, 0); });
+  ve("c-cpv", d.cpv, function (x) { return vn(x, 1) + "đ"; });
+  ve("c-xem", d.xem_tb, function (x) { return vn(x, 1) + "s"; });
+})();
+</script>
+</body>
+</html>

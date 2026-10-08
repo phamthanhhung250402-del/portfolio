@@ -1,0 +1,58 @@
+# =====================================================================
+# TRỌNG SỐ CHẤM ĐIỂM NHÓM NỘI DUNG (mặc định cho mọi thương hiệu)
+# Thương hiệu muốn trọng số riêng: chép file này vào
+# config/brands/<thuong-hieu>/weights.yaml rồi sửa ở đó.
+#
+# Cách tính: mỗi video được xếp hạng phần trăm (0-100) theo từng chỉ số so với
+# các video khác cùng giai đoạn. Điểm nhóm = MEDIAN của video trong nhóm,
+# rồi cộng theo trọng số bên dưới. Thiếu chỉ số nào thì chia lại trọng số
+# cho các chỉ số còn lại.
+# tot_khi: thap = càng thấp càng tốt (chi phí), cao = càng cao càng tốt
+# =====================================================================
+
+nhom_chi_so:
+  hieu_qua_chi_phi:
+    ten: "Hiệu quả chi phí"
+    trong_so: 40
+    chi_so:
+      cpv_tiktok: { ten: "CPV TikTok", tot_khi: thap }
+      cpv_fb_3s:  { ten: "CPV FB 3s",  tot_khi: thap }
+  giu_chan:
+    ten: "Giữ chân"
+    trong_so: 30
+    chi_so:
+      fb_xem_tb:    { ten: "FB xem TB (s)", tot_khi: cao }
+      ty_le_xem_50: { ten: "Tỷ lệ xem 50%", tot_khi: cao }
+      fb_hook_rate: { ten: "FB hook rate",  tot_khi: cao }
+  tuong_tac:
+    ten: "Tương tác"
+    trong_so: 15
+    chi_so:
+      tiktok_er: { ten: "TikTok ER", tot_khi: cao }
+  quy_mo:
+    ten: "Quy mô"
+    trong_so: 15
+    chi_so:
+      tiktok_views: { ten: "TikTok views (median)", tot_khi: cao }
+
+# Nhóm có ít hơn số video này -> "Thử nghiệm - chưa đủ dữ liệu", không xếp hạng
+so_video_toi_thieu: 5
+
+# Chuẩn so sánh theo giai đoạn: cần ít nhất ngần này video của giai đoạn
+# tương tự; thiếu thì lấy thêm giai đoạn "tuong_tu", cuối cùng là toàn bộ lịch sử
+so_video_chuan_giai_doan: 15
+
+phan_bo:
+  ty_le_thu_nghiem: 0.20     # 20% số video dành cho slot thử nghiệm
+  toi_thieu_moi_nhom: 2      # mỗi nhóm đang chạy ít nhất 2 video
+  toi_da_ty_trong: 0.35      # không nhóm nào quá 35% tổng số video
+  do_doc: 2                  # 1 = chia tỷ lệ thuận điểm; 2 = ưu tiên nhóm điểm cao rõ hơn
+  so_thang_dang_chay: 2      # "đang chạy" = có video trong 2 tháng gần nhất
+
+thoi_luong:
+  # Ranh giới các khoảng (giây): <=20, 21-40, 41-60, >60
+  moc: [20, 40, 60]
+  so_video_toi_thieu_moi_khoang: 2
+
+# Mũi tên xu hướng khi điểm nhóm thay đổi từ ngần này điểm trở lên
+nguong_xu_huong: 5

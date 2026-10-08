@@ -1,0 +1,20 @@
+# DỮ LIỆU GIẢ - lịch tháng sau dùng để chạy thử
+thang: 2026-10
+tong_so_video: 26
+giai_doan:
+  - ten: "Sau mở bán iPhone 17"
+    tu_ngay: 2026-10-01
+    den_ngay: 2026-10-12
+  - ten: "BAU"
+    tu_ngay: 2026-10-13
+    den_ngay: 2026-10-31
+san_pham_khuyen_mai:
+  - "iPhone 17 trả chậm 0%"
+  - "Thu cũ đổi mới trợ giá 2 triệu"
+su_kien:
+  - ten: "Khai trương TopZone Quận 7"
+    ngay: 2026-10-18
+nhom_thu_nghiem:
+  - "Sketch hài - Ai Dè"
+  - "Unboxing ASMR"
+thang_cap_nhat:

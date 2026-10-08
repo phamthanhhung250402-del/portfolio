@@ -1,0 +1,55 @@
+# =====================================================================
+# LỊCH THÁNG SAU - bạn điền file này rồi bấm đúp Chay-bao-cao.command
+# Quy tắc viết:
+#   - Dòng bắt đầu bằng # là chú thích, tool bỏ qua.
+#   - Giữ nguyên số dấu cách đầu dòng như mẫu.
+#   - Chữ có dấu hai chấm ":" thì đặt trong ngoặc kép "...".
+#   - Ngày viết dạng NĂM-THÁNG-NGÀY, vd 2026-11-07.
+#   - Ô nào không biết thì để trống, tool tự dùng giá trị mặc định.
+# =====================================================================
+
+# Tháng cần đề xuất mix nội dung, dạng NĂM-THÁNG (vd 2026-11).
+# Để trống = tháng ngay sau tháng có số liệu gần nhất trong sheet.
+thang:
+
+# Tổng số video dự kiến làm trong tháng.
+# Để trống = bằng số video (của bạn, đã air) trong tháng gần nhất.
+tong_so_video:
+
+# Các giai đoạn trong tháng. Mỗi giai đoạn 3 dòng: ten, tu_ngay, den_ngay.
+#   loai (không bắt buộc): bau | truoc_announce | announce | pre_order | mo_ban | sau_mo_ban
+#   Bỏ trống "loai" thì tool tự đoán theo tên (vd tên có chữ "Mở bán" -> mo_ban).
+#   so_video (không bắt buộc): muốn chốt cứng số video cho giai đoạn này.
+#   Không có giai đoạn nào -> cả tháng tính là BAU.
+giai_doan:
+  - ten: "BAU"
+    tu_ngay:
+    den_ngay:
+#  - ten: "Before Announce"
+#    tu_ngay: 2026-11-01
+#    den_ngay: 2026-11-09
+#  - ten: "Mở bán"
+#    loai: mo_ban
+#    tu_ngay: 2026-11-10
+#    den_ngay: 2026-11-16
+
+# Sản phẩm / chương trình khuyến mãi trong tháng (mỗi dòng 1 mục, bắt đầu bằng "- ")
+san_pham_khuyen_mai:
+#  - "iPhone 17 Pro Max giảm đến 3 triệu"
+#  - "Trả chậm 0% qua thẻ tín dụng"
+
+# Sự kiện / launch. Mỗi sự kiện đảm bảo nhóm "Mở bán / Sự kiện / Social proof"
+# có ít nhất 1 video.
+su_kien:
+#  - ten: "Khai trương TopZone Quận 7"
+#    ngay: 2026-11-15
+
+# Nhóm nội dung bạn MUỐN THỬ NGHIỆM (được ưu tiên vào 20% slot thử nghiệm).
+# Ghi đúng tên nhóm trong sheet, hoặc tên nhóm mới hoàn toàn.
+nhom_thu_nghiem:
+#  - "Workshop / Cộng đồng"
+#  - "Unboxing ASMR"
+
+# (Không bắt buộc) Tháng cần cập nhật số liệu vào tab 03, dạng NĂM-THÁNG.
+# Để trống = tháng gần nhất có video "Đã air" của bạn.
+thang_cap_nhat:
