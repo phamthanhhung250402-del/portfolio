@@ -52,9 +52,11 @@ VIDEO_URLS: [
 
 Hỗ trợ: YouTube (cả Shorts), TikTok (link dạng `.../video/<số>`), Facebook video/reel, file `.mp4`. Video chỉ tải khi khách bấm Play (để trang nhẹ).
 
-### b) `index.html` - `{{SITE_URL}}` (mọi chỗ trong phần `<head>`)
+### b) `index.html` - địa chỉ website (SITE_URL)
 
-Dùng cho ảnh chia sẻ Facebook/Zalo (og-image) và Google. Sau khi có tên miền (mục 8), mở `index.html`, dùng **Tìm & thay thế tất cả** (Replace All): `{{SITE_URL}}` → `https://mcthuyvy.vn` (không có dấu `/` ở cuối). Nếu chưa có tên miền riêng thì dùng tên miền Vercel, ví dụ `https://mc-thuyvy.vercel.app`.
+Đang điền sẵn link GitHub Pages: `https://phamthanhhung250402-del.github.io/portfolio/mc-thuyvy` (6 chỗ trong phần `<head>`, dùng cho ảnh chia sẻ Facebook/Zalo và Google). Khi chuyển sang Vercel hoặc có tên miền riêng (mục 7, 8), mở `index.html`, dùng **Tìm & thay thế tất cả** (Replace All): `https://phamthanhhung250402-del.github.io/portfolio/mc-thuyvy` → `https://mcthuyvy.vn` (không có dấu `/` ở cuối).
+
+**Link hiện tại:** https://phamthanhhung250402-del.github.io/portfolio/mc-thuyvy/
 
 ---
 
@@ -160,7 +162,7 @@ Chưa có endpoint thì nút "Gửi yêu cầu" sẽ mở ứng dụng email c�
    - **Build and Output Settings**: để trống hết (không có build command)
 5. Bấm **Deploy**. Khoảng 30 giây sau có link dạng `https://mc-thuyvy.vercel.app`.
 6. Vào **Settings → Git → Production Branch**: đặt nhánh chứa website (thường là `main` sau khi merge). Từ đó mỗi lần push/commit, Vercel tự cập nhật; các nhánh khác có link xem trước riêng.
-7. Điền `{{SITE_URL}}` trong `index.html` bằng link vừa có (mục 1b), commit.
+7. Thay địa chỉ website trong `index.html` bằng link vừa có (mục 1b), commit.
 
 `vercel.json` đã cấu hình sẵn cache cho font/ảnh và header bảo mật; `.vercelignore` loại `assets/raw/`, `tools/`, PDF và README khỏi website.
 
@@ -179,7 +181,7 @@ Chưa có endpoint thì nút "Gửi yêu cầu" sẽ mở ứng dụng email c�
 
    (Luôn lấy giá trị **chính xác đang hiển thị** trong Vercel - có thể khác bảng trên.) Xoá bản ghi `A`/`CNAME` cũ trùng tên nếu có.
 4. Chờ 5 phút - vài giờ. Vercel tự cấp HTTPS khi dấu ✓ chuyển xanh.
-5. Thay `{{SITE_URL}}` (hoặc link vercel.app đã điền) trong `index.html` bằng `https://mcthuyvy.vn`, commit.
+5. Thay địa chỉ website (mục 1b) trong `index.html` bằng `https://mcthuyvy.vn`, commit.
 6. Kiểm tra ảnh chia sẻ: dán link vào https://developers.facebook.com/tools/debug/ → **Scrape Again**.
 
 ---
@@ -188,7 +190,7 @@ Chưa có endpoint thì nút "Gửi yêu cầu" sẽ mở ứng dụng email c�
 
 - [ ] Đã thay toàn bộ ảnh placeholder (mục 3) và tạo lại og-image
 - [ ] Đã điền liên hệ, showreel, Formspree trong `js/config.js`
-- [ ] Đã thay `{{SITE_URL}}` trong `index.html`
+- [ ] Đã cập nhật địa chỉ website trong `index.html` nếu đổi sang Vercel/tên miền riêng
 - [ ] Gửi thử form, bấm thử nút Gọi/Zalo trên điện thoại
 - [ ] Xem lại bản tiếng Anh (nút EN) - bản dịch do Claude soạn, nên nhờ người đọc lại các trích dẫn khách hàng
 - [ ] Hỏi ý kiến các khách hàng có tên trong mục "Khách hàng nói gì" nếu cần
@@ -198,5 +200,5 @@ Chưa có endpoint thì nút "Gửi yêu cầu" sẽ mở ứng dụng email c�
 - Font Cormorant SC, Cormorant Garamond, Be Vietnam Pro, Great Vibes được **tự host** (subset latin + vietnamese) - không phụ thuộc Google Fonts, hiển thị dấu tiếng Việt đầy đủ.
 - Đổi ngôn ngữ lưu vào trình duyệt; có thể gửi thẳng link tiếng Anh: `https://mcthuyvy.vn/?lang=en`.
 - Tôn trọng chế độ giảm chuyển động (prefers-reduced-motion): tắt rèm, đếm số, lấp lánh.
-- Lighthouse (mô phỏng mobile, có nén như Vercel): Performance 94 · Accessibility 100 · Best Practices 100 · SEO 92 (SEO lên 100 sau khi điền `{{SITE_URL}}`). Desktop: 100 · 100 · 100 · 92.
+- Lighthouse (mô phỏng mobile, có nén như Vercel): Performance 94 · Accessibility 100 · Best Practices 100 · SEO 100 khi đã điền địa chỉ website. Desktop: 100 · 100 · 100.
 - `tools/make_placeholders.cjs` chỉ dùng để tạo lại ảnh tạm - không cần khi đã có ảnh thật.
