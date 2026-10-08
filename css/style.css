@@ -223,7 +223,7 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
   background: linear-gradient(to top, rgba(0, 0, 0, 0.88), transparent);
 }
 .slide-views { color: var(--accent); font-weight: 750; font-size: 28px; letter-spacing: -0.03em; line-height: 1; }
-.slide-views small { color: var(--text-2); font-size: 13px; font-weight: 500; letter-spacing: 0; margin-left: 6px; }
+.slide-views small { color: var(--text-2); font-size: 13px; font-weight: 500; letter-spacing: 0; margin-left: 2px; }
 .slide-title { margin-top: 8px; font-size: 15px; font-weight: 600; line-height: 1.3; }
 .slide-dots {
   position: absolute; left: 0; right: 0; bottom: 18px; z-index: 3;
@@ -407,6 +407,40 @@ ul, ol { margin: 0; padding: 0; list-style: none; }
 .ads-note { margin-top: 8px !important; font-size: 13.5px; color: var(--text-2); }
 @media (max-width: 767px) { .ads-stat:first-child { grid-column: 1 / -1; } .ads-stat { padding: 16px; } }
 .sub-title { margin: 48px 0 20px; font-size: clamp(20px, 2.2vw, 26px); font-weight: 700; letter-spacing: -0.02em; }
+
+/* ============ Avatar hero ============ */
+.eyebrow-avatar {
+  width: 36px; height: 36px; border-radius: 50%; object-fit: cover; flex: none;
+  box-shadow: 0 0 0 2px var(--bg), 0 0 0 4px var(--accent);
+}
+
+/* ============ Về mình ============ */
+.about-grid { display: grid; gap: 36px; align-items: center; }
+.about-photos { display: grid; gap: 10px; max-width: 460px; width: 100%; margin: 0 auto; }
+.about-photos img { width: 100%; height: auto; object-fit: cover; border-radius: var(--radius); background: var(--bg-3); }
+.photo-main { aspect-ratio: 3 / 4; }
+.photo-strip { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; }
+.photo-strip img { aspect-ratio: 4 / 5; border-radius: var(--radius-sm); }
+.about-text h2 { margin-bottom: 16px; }
+.about-lead { font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5; color: var(--text); }
+.about-body { margin-top: 14px; color: var(--text-2); font-size: 16px; }
+.tools { display: flex; flex-wrap: wrap; gap: 8px; margin: 22px 0 24px; }
+.tools li {
+  padding: 6px 12px; border-radius: 999px;
+  border: 1px solid var(--line-2); color: var(--text-2);
+  font-size: 13.5px; font-weight: 600;
+}
+
+/* ============ Kỹ năng ============ */
+.skills { display: grid; grid-template-columns: 1fr; gap: 14px; }
+.skill {
+  position: relative; padding: 24px; border-radius: var(--radius);
+  background: var(--bg-2); border: 1px solid var(--line);
+}
+.skill-num { font-size: 13px; font-weight: 700; color: var(--accent); font-variant-numeric: tabular-nums; }
+.skill h4 { margin-top: 10px; font-size: 18px; line-height: 1.3; font-weight: 700; letter-spacing: -0.015em; }
+.skill-tag { margin-top: 4px; font-size: 13px; color: var(--text-3); font-weight: 600; }
+.skill .ticks { margin-top: 14px; }
 
 /* ============ Services ============ */
 .services { display: grid; grid-template-columns: 1fr; gap: 14px; }
@@ -637,7 +671,9 @@ body.lb-open { overflow: hidden; }
   .fab-zalo { display: inline-flex; }
   .clip-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .filters { margin: -4px 0; padding: 4px 0; flex-wrap: wrap; overflow: visible; }
-  .services { gap: 16px; }
+  .services { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .skills { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .skill:last-child { grid-column: 1 / -1; }
   .post-grid { grid-auto-flow: row; grid-auto-columns: auto; grid-template-columns: repeat(2, minmax(0, 1fr)); overflow: visible; margin: 0; padding: 0; gap: 16px; }
   .ads-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .process { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
@@ -658,7 +694,12 @@ body.lb-open { overflow: hidden; }
   .hero-media { justify-content: flex-end; }
   .phone { width: 320px; }
   .clip-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
-  .services { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .services { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .about-grid { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr); gap: 64px; }
+  .skills { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 20px; }
+  .skill { grid-column: span 2; }
+  .skill:nth-child(4), .skill:nth-child(5) { grid-column: span 3; }
+  .skill:last-child { grid-column: span 3; }
   .post-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
   .ads-stats { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
   .section { padding: 112px 0; }

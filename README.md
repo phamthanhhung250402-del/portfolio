@@ -12,7 +12,7 @@ js/main.js              Lưới video, bộ lọc, lightbox, nhúng bài Faceboo
 data/clips.json         ← Video đã edit (mục "Video đã edit" + số liệu đầu trang)
 data/posts.json         ← Bài đăng Facebook (mục "Social")
 data/ads.json           ← Video quảng cáo TopZone (mục "Paid Ads")
-assets/                 Ảnh chia sẻ (og-image.jpg), favicon, showreel, thumbnail
+assets/                 Ảnh chia sẻ (og-image.jpg), favicon, ảnh cá nhân (photos/), showreel, thumbnail
 scripts/fetch-thumbs.mjs  Script tải thumbnail từ TikTok
 ```
 
@@ -29,18 +29,20 @@ zalo: "+84 559 641 425",
 email: null,                                  // điền email nếu muốn hiện, vd "ban@gmail.com"
 services: {
   edit:   { price: null, delivery: "1-3 ngày/video" },   // price: "500.000đ/video"
+  script: { price: null, delivery: "2-3 ngày/kịch bản" },
   social: { price: null, delivery: "Theo tháng" },
   ads:    { price: null, delivery: "Báo cáo hằng tuần" }
 },
 ads: {
-  cpv: { value: null, label: "CPV trung bình" },   // vd value: "38đ"
-  cpm: { value: null, label: "CPM trung bình" }    // vd value: "9.500đ"
+  cpmBest: { value: "7.425đ", label: "CPM tốt nhất", note: "chiến dịch video TikTok tốt nhất" },
+  cpm:     { value: "15.574đ", label: "CPM trung bình", note: "toàn bộ chiến dịch T7-T9, gồm cả quảng cáo ảnh" }
 }
 ```
 
 - `price: null` → hiện "Liên hệ báo giá". Điền giá → hiện "Giá từ ...".
-- `ads.cpv` / `ads.cpm` để `null` thì ô đó tự ẩn. **Lưu ý:** CPV/CPM là số liệu nội bộ của TopZone - nên hỏi lại quản lý trước khi công khai.
-- Sửa mô tả gói dịch vụ, quy trình, kinh nghiệm: sửa trực tiếp trong `index.html` (tìm theo chữ).
+- Ô CPM nào để `value: null` thì tự ẩn. **Lưu ý:** CPV/CPM là số liệu nội bộ của TopZone - nên hỏi lại quản lý trước khi công khai.
+- Sửa mô tả gói dịch vụ, kỹ năng, quy trình, kinh nghiệm: sửa trực tiếp trong `index.html` (tìm theo chữ).
+- Đổi ảnh cá nhân: thay file cùng tên trong `assets/photos/` (`hung-main.webp` tỉ lệ 3:4, 3 ảnh nhỏ tỉ lệ 4:5, `hung-avatar.webp` vuông).
 
 **Sửa nhanh trên GitHub (không cần cài gì):** vào repo → mở file → bấm biểu tượng bút chì ✏️ → sửa → **Commit changes**. Khoảng 1 phút sau web tự cập nhật.
 

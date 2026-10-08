@@ -25,14 +25,14 @@ window.SITE_CONFIG = {
   // Giá từng gói. price: null => hiện "Liên hệ báo giá". Ví dụ price: "800.000đ/video"
   services: {
     edit: { price: null, delivery: "1-3 ngày/video" },
+    script: { price: null, delivery: "2-3 ngày/kịch bản" },
     social: { price: null, delivery: "Theo tháng" },
     ads: { price: null, delivery: "Báo cáo hằng tuần" }
   },
 
-  // Số liệu Paid Ads (TopZone Official). value: null => ô đó tự ẩn.
-  // TUỲ BẠN: CPV/CPM là số liệu nội bộ của công ty, cân nhắc trước khi công khai.
+  // Số liệu Paid Ads (TopZone Official, T7-T9/2026). value: null => ô đó tự ẩn.
   ads: {
-    cpv: { value: null, label: "CPV trung bình" },   // ví dụ "45đ"
-    cpm: { value: null, label: "CPM trung bình" }    // ví dụ "9.800đ"
+    cpmBest: { value: "7.425đ", label: "CPM tốt nhất", note: "chiến dịch video TikTok tốt nhất" },
+    cpm: { value: "15.574đ", label: "CPM trung bình", note: "toàn bộ chiến dịch T7-T9, gồm cả quảng cáo ảnh" }
   }
 };

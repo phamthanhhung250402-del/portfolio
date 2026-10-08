@@ -94,6 +94,7 @@
       if (!m || isUnset(m.value)) return;
       $("[data-ads-value]", box).textContent = m.value;
       if (m.label) $("[data-ads-label]", box).textContent = m.label;
+      if (m.note && $("[data-ads-note]", box)) $("[data-ads-note]", box).textContent = m.note;
       box.hidden = false;
     });
 
@@ -465,10 +466,10 @@
     screen.innerHTML =
       '<span class="showreel-label">Video nổi bật</span>' +
       '<div class="slides">' + featured.map(function (c, i) {
-        return '<button type="button" class="slide' + (i === 0 ? " is-active" : "") + '" data-id="' + escapeHtml(c.id) + '" aria-label="' + escapeHtml(formatViews(c.views) + " lượt xem " + c.title + ". Bấm để xem video") + '">' +
+        return '<button type="button" class="slide' + (i === 0 ? " is-active" : "") + '" data-id="' + escapeHtml(c.id) + '">' +
           mediaHtml(c, { badges: false, eager: i === 0 }) +
-          '<span class="slide-info" aria-hidden="true">' +
-          '<span class="slide-views">' + formatViews(c.views) + '<small>lượt xem</small></span>' +
+          '<span class="slide-info">' +
+          '<span class="slide-views">' + formatViews(c.views) + ' <small>lượt xem</small></span>' +
           '<span class="slide-title" style="display:block">' + escapeHtml(c.title) + '</span>' +
           (c.brand ? '<span class="slide-brand">' + escapeHtml(c.brand) + '</span>' : "") +
           '</span></button>';
@@ -616,7 +617,7 @@
     initHeader();
     initCountUp();
     initLightbox();
-    reveal($$(".section-head, .ads-stat, .service, .process li, .tl-item, .contact-list li"));
+    reveal($$(".section-head, .ads-stat, .about-photos, .about-text, .skill, .service, .process li, .tl-item, .contact-list li"));
 
     var grid = $("#clip-grid");
     grid.classList.add("is-loading");
